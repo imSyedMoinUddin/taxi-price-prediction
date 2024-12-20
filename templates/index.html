@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi Price Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 50px auto;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #17a2b8;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        label {
+            width: 100%;
+            max-width: 400px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: #495057;
+        }
+
+        button {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #138496;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .error {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            label {
+                font-size: 0.85rem;
+            }
+
+            input,
+            select,
+            button {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            label {
+                font-size: 0.8rem;
+            }
+
+            input,
+            select,
+            button {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Taxi Price Prediction</h1>
+        <form method="POST" action="/predict">
+            <label for="Trip_Distance_km">Trip Distance (km):</label>
+            <input type="text" id="Trip_Distance_km" name="Trip_Distance_km" required>
+
+            <label for="Time_of_Day">Time of Day:</label>
+            <select id="Time_of_Day" name="Time_of_Day">
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Evening">Evening</option>
+                <option value="Night">Night</option>
+            </select>
+
+            <label for="Day_of_Week">Day of Week:</label>
+            <select id="Day_of_Week" name="Day_of_Week">
+                <option value="Weekday">Weekday</option>
+                <option value="Weekend">Weekend</option>
+            </select>
+
+            <label for="Passenger_Count">Passenger Count:</label>
+            <input type="text" id="Passenger_Count" name="Passenger_Count" required>
+
+            <label for="Traffic_Conditions">Traffic Conditions:</label>
+            <select id="Traffic_Conditions" name="Traffic_Conditions">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <label for="Weather">Weather:</label>
+            <select id="Weather" name="Weather">
+                <option value="Clear">Clear</option>
+                <option value="Rain">Rain</option>
+                <option value="Snow">Snow</option>
+            </select>
+
+            <label for="Base_Fare">Base Fare ($):</label>
+            <input type="text" id="Base_Fare" name="Base_Fare" required>
+
+            <label for="Per_Km_Rate">Per Km Rate ($):</label>
+            <input type="text" id="Per_Km_Rate" name="Per_Km_Rate" required>
+
+            <label for="Per_Minute_Rate">Per Minute Rate ($):</label>
+            <input type="text" id="Per_Minute_Rate" name="Per_Minute_Rate" required>
+
+            <label for="Trip_Duration_Minutes">Trip Duration (minutes):</label>
+            <input type="text" id="Trip_Duration_Minutes" name="Trip_Duration_Minutes" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+
+        {% if error_text %}
+        <div class="error">
+            {{ error_text }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
